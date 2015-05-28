@@ -30,12 +30,13 @@ clear ; close all; clc
 % Load from ex6data1:
 % You will have X, y in your environment
 load('ex6data1.mat');
+% show = [X(:,1) X(:,2) y]
 
 % % Plot training data
-% plotData(X, y);
+plotData(X, y);
 %
-% fprintf('Program paused. Press enter to continue.\n');
-% pause;
+fprintf('Program paused. Press enter to continue.\n');
+pause;
 
 %% ==================== Part 2: Training Linear SVM ====================
 %  The following code will train a linear SVM on the dataset and plot the
@@ -44,23 +45,24 @@ load('ex6data1.mat');
 
 % Load from ex6data1:
 % You will have X, y in your environment
-% load('ex6data1.mat');
-%
-% fprintf('\nTraining Linear SVM ...\n')
+load('ex6data1.mat');
+
+fprintf('\nTraining Linear SVM ...\n')
 %
 % % You should try to change the C value below and see how the decision
 % % boundary varies (e.g., try C = 1000)
-% C = 1;
-% model = svmTrain(X, y, C, @linearKernel, 1e-3, 20);
-% visualizeBoundaryLinear(X, y, model);
-%
-% fprintf('Program paused. Press enter to continue.\n');
-% pause;
+C = 1;
+
+model = svmTrain(X, y, C, @linearKernel, 1e-3, 20);
+visualizeBoundaryLinear(X, y, model);
+
+fprintf('Program paused. Press enter to continue.\n');
+pause;
 
 %% =============== Part 3: Implementing Gaussian Kernel ===============
-%  You will now implement the Gaussian kernel to use
-%  with the SVM. You should complete the code in gaussianKernel.m
-%
+ % You will now implement the Gaussian kernel to use
+ % with the SVM. You should complete the code in gaussianKernel.m
+
 fprintf('\nEvaluating the Gaussian Kernel ...\n')
 
 x1 = [1 2 1]; x2 = [0 4 -1]; sigma = 2;
@@ -77,10 +79,10 @@ pause;
 %  plot the data.
 %
 
-fprintf('Loading and Visualizing Data ...\n')
-
-% Load from ex6data2:
-% You will have X, y in your environment
+% fprintf('Loading and Visualizing Data ...\n')
+%
+% % Load from ex6data2:
+% % You will have X, y in your environment
 load('ex6data2.mat');
 
 % Plot training data
@@ -93,18 +95,28 @@ pause;
 %  After you have implemented the kernel, we can now use it to train the
 %  SVM classifier.
 %
+fprintf('\nLoading Data for Part 5: Training SVM with RBF Kernel) ...\n');
+
+% % Load from ex6data2:
+% % You will have X, y in your environment
+load('ex6data2.mat');
+% size(X)
+% size(y)
+% X(1:10,1)'
+% X(1:10,2)'
+% y(1:10)'
+% x1
+% x2
+% pause
+%
 fprintf('\nTraining SVM with RBF Kernel (this may take 1 to 2 minutes) ...\n');
 
-% Load from ex6data2:
-% You will have X, y in your environment
-load('ex6data2.mat');
-
-% SVM Parameters
+% % SVM Parameters
 C = 1; sigma = 0.1;
-
-% We set the tolerance and max_passes lower here so that the code will run
-% faster. However, in practice, you will want to run the training to
-% convergence.
+%
+% % We set the tolerance and max_passes lower here so that the code will run
+% % faster. However, in practice, you will want to run the training to
+% % convergence.
 model= svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma));
 visualizeBoundary(X, y, model);
 
@@ -121,7 +133,7 @@ fprintf('Loading and Visualizing Data ...\n')
 % Load from ex6data3:
 % You will have X, y in your environment
 load('ex6data3.mat');
-
+%
 % Plot training data
 plotData(X, y);
 
