@@ -47,8 +47,10 @@ J = sum(errorSquared)/(2*m);      %sum all elements in array & divide by 2m
 
     % ============================================================
 
-    % Save the cost J in every iteration    
-    J_history(count) = computeCost(X, y, theta);
+    % Save the cost J in every iteration 
+    J_history(count,1) = count;   
+    J_history(count,2) = computeCost(X, y, theta);
+ 
 
 end
 save itCanBeDone.txt J_history -ascii;
