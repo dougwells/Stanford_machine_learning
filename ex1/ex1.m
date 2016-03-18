@@ -70,7 +70,10 @@ theta = gradientDescent(X, y, theta, alpha, iterations);
 fprintf('Theta found by gradient descent: ');
 fprintf('%f %f \n', theta(1), theta(2));
 
-% Plot the linear fit
+% Plot the linear fit X(:,2) is actual/observed values of x
+% X*theta is merely calculated/predicted value for y using final values of theta
+% Therefore, code below merely prints the proposed/best fit line thru data
+
 hold on; % keep previous plot visible
 plot(X(:,2), X*theta, '-')
 legend('Training data', 'Linear regression')
@@ -94,7 +97,7 @@ fprintf('Visualizing J(theta_0, theta_1) ...\n')
 theta0_vals = linspace(-10, 10, 100);
 theta1_vals = linspace(-1, 4, 100);
 
-% initialize J_vals to a matrix of 0's
+% initialize J_vals to a matrix of 0s
 J_vals = zeros(length(theta0_vals), length(theta1_vals));
 
 % Fill out J_vals
