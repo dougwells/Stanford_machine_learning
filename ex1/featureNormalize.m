@@ -41,11 +41,12 @@ sigma = zeros(1, size(X, 2));
     % fprintf('Less Means & Divided by Std Dev ... \n');
     % fprintf(' x = [%.0f %.0f]\n', [X_norm(1:10,:)]');
 
-    fprintf('mu, sigma & X_norm ... \n');
-    fprintf(' mu = [%.0f %.2f]\n', [mu(:,:)]');
-    fprintf(' sigma = [%.0f %.4f]\n', [sigma(:,:)]');
-    fprintf(' X_norm1 = [%.2f %.2f]\n', [X_norm1(1:10,:)]');
-    fprintf(' X_norm = [%.2f %.2f]\n', [X_norm(1:10,:)]');
+    % fprintf('mu, sigma & X_norm ... \n');
+    % fprintf(' mu = [%.0f %.2f]\n', [mu(:,:)]');
+    % fprintf(' sigma = [%.0f %.4f]\n', [sigma(:,:)]');
+    fprintf(' X = [%.0f %.0f]\n', [X(1:5,:)]');
+    fprintf(' X_norm = [%.2f %.2f]\n', [X_norm(1:5,:)]');
+    pause;
 
 
 
