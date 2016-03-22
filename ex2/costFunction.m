@@ -10,6 +10,7 @@ m = length(y); % number of training examples
 % You need to return the following variables correctly
 J = 0;
 grad = zeros(size(theta));
+alpha = 1;
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: Compute the cost of a particular choice of theta.
@@ -19,21 +20,24 @@ grad = zeros(size(theta));
 %
 % Note: grad should have the same dimensions as theta
 %
-pred = sigmoid(X*theta);
-act=y;
-err1 = -y.*log(pred);
-err2= (1-y).*log(1-pred);
-diffErr=pred-act;
-logErr = err1-err2;
-J=sum(logErr)/m
-gradient(1)=diffErr'*X(:,1)/m;
-gradient(2)=diffErr'*X(:,2)/m;
-gradient(3)=diffErr'*X(:,3)/m;
+for count=1:1
+  pred = sigmoid(X*theta);
+  act=y;
+  err1 = -y.*log(pred);
+  err2= (1-y).*log(1-pred);
+  diffErr=pred-act;
+  logErr = err1-err2;
+  grad(1)=diffErr'*X(:,1)*(alpha/m);
+  grad(2)=diffErr'*X(:,2)*(alpha/m);
+  grad(3)=diffErr'*X(:,3)*(alpha/m);
+  J=sum(logErr)/m;
+  theta=theta-grad;
 
-
-
-
-
+  % Save the cost J in every iteration
+  J_history(count,1)=count;
+  J_history(count,2)=J;
+% end
+save itCanBeDone2.txt J_history -ascii;
 
 % =============================================================
 
