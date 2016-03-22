@@ -4,13 +4,19 @@ function [J, grad] = costFunction(theta, X, y)
 %   parameter for logistic regression and the gradient of the cost
 %   w.r.t. to the parameters.
 
+
 % Initialize some useful values
 m = length(y); % number of training examples
 
 % You need to return the following variables correctly
 J = 0;
 grad = zeros(size(theta));
-alpha = 1;
+
+% !!! Change to the following values when "submitting"
+%     alpha = 0.0001;
+%     loopend = 1;
+alpha=0.0001;
+loopEnd=100;
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: Compute the cost of a particular choice of theta.
@@ -20,24 +26,25 @@ alpha = 1;
 %
 % Note: grad should have the same dimensions as theta
 %
-for count=1:1
+for count=1:loopEnd;
   pred = sigmoid(X*theta);
   act=y;
   err1 = -y.*log(pred);
   err2= (1-y).*log(1-pred);
   diffErr=pred-act;
   logErr = err1-err2;
-  grad(1)=diffErr'*X(:,1)*(alpha/m);
-  grad(2)=diffErr'*X(:,2)*(alpha/m);
-  grad(3)=diffErr'*X(:,3)*(alpha/m);
+  grad=diffErr'*X*(alpha/m);
   J=sum(logErr)/m;
-  theta=theta-grad;
+  theta=theta-grad';
 
   % Save the cost J in every iteration
   J_history(count,1)=count;
   J_history(count,2)=J;
+  plot(J_history(:,1),J_history(:,2),'r+');
+
 % end
 save itCanBeDone2.txt J_history -ascii;
+save myThetas.txt theta -ascii;
 
 % =============================================================
 
