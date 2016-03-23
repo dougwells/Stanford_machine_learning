@@ -15,8 +15,8 @@ grad = zeros(size(theta));
 % !!! Change to the following values when "submitting"
 %     alpha = 0.0001;
 %     loopend = 1;
-alpha=0.0001;
-loopEnd=100;
+alpha=1;
+loopEnd=1;
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: Compute the cost of a particular choice of theta.
@@ -26,7 +26,7 @@ loopEnd=100;
 %
 % Note: grad should have the same dimensions as theta
 %
-for count=1:loopEnd;
+% for count=1:loopEnd;
   pred = sigmoid(X*theta);
   act=y;
   err1 = -y.*log(pred);
@@ -38,13 +38,13 @@ for count=1:loopEnd;
   theta=theta-grad';
 
   % Save the cost J in every iteration
-  J_history(count,1)=count;
-  J_history(count,2)=J;
-  plot(J_history(:,1),J_history(:,2),'r+');
+  % J_history(count,1)=count;
+  % J_history(count,2)=J;
+  % plot(J_history(:,1),J_history(:,2),'r+');
 
 % end
-save itCanBeDone2.txt J_history -ascii;
-save myThetas.txt theta -ascii;
+% save itCanBeDone2.txt J_history -ascii;
+% save myThetas.txt theta -ascii;
 
 % =============================================================
 
