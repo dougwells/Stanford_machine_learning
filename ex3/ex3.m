@@ -41,10 +41,10 @@ n = size(X, 2);
 rand_indices = randperm(m);
 sel = X(rand_indices(1:100), :);
 
-% displayData(sel);
-%
-% fprintf('Program paused. Press enter to continue.\n');
-% pause;
+displayData(sel);
+
+fprintf('Program paused. Press enter to continue.\n');
+pause;
 
 %% ============ Part 2: Vectorize Logistic Regression ============
 %  In this part of the exercise, you will reuse your logistic regression
@@ -66,5 +66,10 @@ lambda = 0.1;
 %% ================ Part 3: Predict for One-Vs-All ================
 %  After ...
 pred = predictOneVsAll(all_theta, X);
+for i=10:10:100
+myPred(i/10,:)=pred(rand_indices(i-10+1:i),:)';
+end
+myPred(myPred == 10) = 0;
+myPred
 
 fprintf('\nTraining Set Accuracy: %f\n', mean(double(pred == y)) * 100);
