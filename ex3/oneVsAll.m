@@ -59,7 +59,6 @@ for c = 1:num_labels
                   initial_theta, options);
       Theta(c,:) = theta';
 end
-% size(Theta)
 all_theta = Theta;
 
 % =========================================================================

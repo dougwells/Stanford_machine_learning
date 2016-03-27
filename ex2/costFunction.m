@@ -10,7 +10,7 @@ m = length(y); % number of training examples
 
 % You need to return the following variables correctly
 J = 0;
-size(theta)
+size(theta);
 grad = zeros(size(theta));
 
 % !!! Change to the following values when "submitting" !!!

@@ -35,6 +35,7 @@ num_labels = 10;          % 10 labels, from 1 to 10
 load('ex3data1.mat'); % training data stored in arrays X, y
 m = size(X, 1);
 n = size(X, 2);
+% lookAtY=y(301:800,:)'
 
 % Randomly select 100 data points to display
 rand_indices = randperm(m);
