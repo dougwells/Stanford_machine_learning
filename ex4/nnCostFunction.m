@@ -22,16 +22,25 @@ Theta1 = reshape(nn_params(1:hidden_layer_size * (input_layer_size + 1)), ...
 Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):end), ...
                  num_labels, (hidden_layer_size + 1));
 
+% size(X)
+% size(Theta1)
+% size(Theta2)
+
 
 
 % Setup some useful variables
 L = 2;
 m = size(X, 1);
-K1 = size(Theta1,1)
-K2 = size (Theta2,1)
+K1 = size(Theta1,1);
+K2 = size (Theta2,1);
 
-% Add column of 1's to X
+% Add column of 1's to X, Theta1 and Theta2
 X=[ones(m,1) X];
+% Theta1 = [ones(K1,1),Theta1];
+% Theta2 = [ones(K2,1),Theta2];
+% size(X)
+% size(Theta1)
+% size(Theta2)
 
 % You need to return the following variables correctly
 J = 0;
@@ -47,27 +56,36 @@ Theta2_grad = zeros(size(Theta2));
 %         cost function computation is correct by verifying the cost
 %         computed in ex4.m
 %
-for l=1:L
-  endK = strcat('K', num2str(l));
-  if L==1; Theta = Theta1; inputs = X;end
-  if L==2; Theta = Theta2; inputs = L1Output; end
 
-  for k=1:endK
-    currTheta = Theta(k,:)';
-    pred = sigmoid(inputs*currTheta);
-    act=(y==k);
-    err1 = -act.*log(pred);
-    err2= (1-act).*log(1-pred);
-    diffErr=pred-act;
-    logErr = err1-err2;
-    thetaZero = currTheta(1,:);
-    thetaAllLessZero=currTheta(2:end,:);
-    % set costPenalty & thetaPenalty= 0 for part 1 of Wk5 Exercise
-    % costPenalty = sum(thetaAllLessZero.^2)*(lambda/(2*m));
-    costPenalty = 0;
-    J=(sum(logErr)/m) + penalty;
-  end
-end
+    % Compute outputs of L1
+    inputsOfL1 = X;
+    outputsOfL1 = sigmoid(inputsOfL1*Theta1');
+    size(outputsOfL1);
+
+    %Compute outputs of L2
+    inputsOfL2 = [ones(m,1) outputsOfL1];
+    size(inputsOfL2)
+    size(Theta2)
+    outputsOfL2 = sigmoid(inputsOfL2*Theta2');
+    size(outputsOfL2)
+
+
+    for k=1:K2
+      currTheta = Theta2(k,:)';
+      pred = outputsOfL2;
+      act=(y==k);
+      err1 = -act.*log(pred);
+      err2= (1-act).*log(1-pred);
+      diffErr=pred-act;
+      logErr = err1-err2;
+      thetaZero = currTheta(1,:);
+      thetaAllLessZero=currTheta(2:end,:);
+      % set costPenalty & thetaPenalty= 0 for part 1 of Wk5 Exercise
+      % costPenalty = sum(thetaAllLessZero.^2)*(lambda/(2*m));
+      costPenalty = 0;
+      J=(sum(logErr)/m) + penalty;
+    end
+
   % % thetaPenalty = thetaAllLessZero.*(lambda/m);
   % thetaPenalty=0;
   % grad0 = diffErr'*X(:,1)./m;
