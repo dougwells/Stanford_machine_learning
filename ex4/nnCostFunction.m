@@ -23,8 +23,10 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
                  num_labels, (hidden_layer_size + 1));
 
 % size(X)
+% size(y)
 % size(Theta1)
 % size(Theta2)
+% y(600:1100,1)'
 
 
 
@@ -60,19 +62,12 @@ Theta2_grad = zeros(size(Theta2));
     % Compute outputs of L1
     inputsOfL1 = X;
     outputsOfL1 = sigmoid(inputsOfL1*Theta1');
-    size(outputsOfL1);
+    inputsOfL2 = [ones(m,1) outputsOfL1];
 
     %Compute outputs of L2
-    inputsOfL2 = [ones(m,1) outputsOfL1];
-    size(inputsOfL2)
-    size(Theta2)
-    outputsOfL2 = sigmoid(inputsOfL2*Theta2');
-    size(outputsOfL2)
-
-
     for k=1:K2
       currTheta = Theta2(k,:)';
-      pred = outputsOfL2;
+      pred = sigmoid(inputsOfL2*currTheta);
       act=(y==k);
       err1 = -act.*log(pred);
       err2= (1-act).*log(1-pred);
@@ -83,8 +78,9 @@ Theta2_grad = zeros(size(Theta2));
       % set costPenalty & thetaPenalty= 0 for part 1 of Wk5 Exercise
       % costPenalty = sum(thetaAllLessZero.^2)*(lambda/(2*m));
       costPenalty = 0;
-      J=(sum(logErr)/m) + penalty;
+      J(k,1)=(sum(logErr)/m) + costPenalty;
     end
+      J=sum(J);
 
   % % thetaPenalty = thetaAllLessZero.*(lambda/m);
   % thetaPenalty=0;
