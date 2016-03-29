@@ -53,6 +53,10 @@ fprintf('\nLoading Saved Neural Network Parameters ...\n')
 
 % Load the weights into variables Theta1 and Theta2
 load('ex4weights.mat');
+% size(Theta1)
+% Theta1(1,1:5)
+% size(Theta2)
+% Theta2(1,1:5)
 
 % Unroll parameters
 nn_params = [Theta1(:) ; Theta2(:)];

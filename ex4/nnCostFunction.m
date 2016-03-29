@@ -24,9 +24,9 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
 
 % size(X)
 % size(y)
-% size(Theta1)
-% size(Theta2)
-% y(600:1100,1)'
+% size(Theta1);
+% size(Theta2);
+% y(990:1020,1)'
 
 
 
@@ -36,10 +36,8 @@ m = size(X, 1);
 K1 = size(Theta1,1);
 K2 = size (Theta2,1);
 
-% Add column of 1's to X, Theta1 and Theta2
+% Add column of 1's to X
 X=[ones(m,1) X];
-% Theta1 = [ones(K1,1),Theta1];
-% Theta2 = [ones(K2,1),Theta2];
 % size(X)
 % size(Theta1)
 % size(Theta2)
@@ -59,49 +57,55 @@ Theta2_grad = zeros(size(Theta2));
 %         computed in ex4.m
 %
 
-    % Compute outputs of L1
-    inputsOfL1 = X;
-    outputsOfL1 = sigmoid(inputsOfL1*Theta1');
-    inputsOfL2 = [ones(m,1) outputsOfL1];
+% Compute theta costPenalty for Theta1.  Layer 1 has 400 units (20x20 pixels)
+% There is 1 row of thetas per unit in that layer.  a1=Output = g(X*Theta1)
+% In this case, there are 400 units in Layer 1 and 25 units in Layer 2.
+% Each of the L2's 25 units has 400 inputs plus the bias.
+% Note: We don't include bias/1s in thetaPenalty
+  for k=1:K1
+    currTheta = Theta1(k,:)';
+    thetaZero = currTheta(1,:);
+    thetaAllLessZero=currTheta(2:end,:);
+    costPenaltyTheta1(k,1) = sum(thetaAllLessZero.^2)*(lambda/(2*m));
+  end
 
-    %Compute outputs of L2
-    for k=1:K2
-      currTheta = Theta2(k,:)';
-      pred = sigmoid(inputsOfL2*currTheta);
-      act=(y==k);
-      err1 = -act.*log(pred);
-      err2= (1-act).*log(1-pred);
-      diffErr=pred-act;
-      logErr = err1-err2;
-      thetaZero = currTheta(1,:);
-      thetaAllLessZero=currTheta(2:end,:);
-      % set costPenalty & thetaPenalty= 0 for part 1 of Wk5 Exercise
-      % costPenalty = sum(thetaAllLessZero.^2)*(lambda/(2*m));
-      costPenalty = 0;
-      J(k,1)=(sum(logErr)/m) + costPenalty;
-    end
-      J=sum(J);
-
-  % % thetaPenalty = thetaAllLessZero.*(lambda/m);
-  % thetaPenalty=0;
-  % grad0 = diffErr'*X(:,1)./m;
-  % gradAllLessZero = diffErr'*X(:,2:end)./m + thetaPenalty';
-  % gradAll=[grad0,gradAllLessZero];
-  % grad=gradAll';
-  % theta=theta-grad;
-  % % grad = grad(:);
-  %
-  % % Save the cost J in every iteration
-  % J_history(count,1)=count;
-  % J_history(count,2)=J;
-  %
-  % % plot(J_history(:,1),J_history(:,2),'r+');
-  % save myGradients.txt grad -ascii;
-  % save itCanBeDone2.txt J_history -ascii;
-  % save myThetas.txt theta -ascii;
+% Compute a2's (how close to 1 or 0 is each of the g(X*Theta1)?)
+  a1 = inputsOfL1 = X;
+  a2 = outputsOfL1 = sigmoid(inputsOfL1*Theta1');  % these are the a superscript 2s
+  inputsOfL2 = [ones(m,1) outputsOfL1];       % adding the bias unit
 
 
+% Loop over each activation in Level 2/Output
+  for k=1:K2
 
+    % Compute outputs of L2
+    currTheta = Theta2(k,:)';
+    a3(:,k)=pred = sigmoid(inputsOfL2*currTheta);   % a superscript 3s
+
+    % Compare outputs of L2 to actual results.
+    act=(y==k);
+    Y(:,k)=(y==k);
+
+    % Calculate costs for each activation w/its parameters/weights/thetas
+    err1 = -act.*log(pred);
+    err2= (1-act).*log(1-pred);
+    diffErr=pred-act;
+    logErr = err1-err2;
+    thetaZero = currTheta(1,:);
+    thetaAllLessZero=currTheta(2:end,:);
+    costPenaltyTheta2(k,1) = sum(thetaAllLessZero.^2)*(lambda/(2*m));
+    % "Comment out" cost penalty here.  Will add in down below
+    J(k,1)=(sum(logErr)/m); %+ costPenalty;
+
+% end L2 loop
+  end
+
+% Summarize total costs (1 per activation) + add theta Penalties
+  costPenaltyTheta1 = sum(costPenaltyTheta1);
+  costPenaltyTheta2 = sum(costPenaltyTheta2);
+  J=sum(J)+costPenaltyTheta1 + costPenaltyTheta2;
+
+% Y(990:1010,1)'
 
 
 
@@ -122,6 +126,43 @@ Theta2_grad = zeros(size(Theta2));
 %               over the training examples if you are implementing it for the
 %               first time.
 %
+% Calculate delta3 (actual - predicted)
+% for k = 1:K2
+%   delta3(:,k) = sum(Y(:,k)-a3(:,k));
+% end
+%
+% % Calculate delta2 (note: no delta1 as a1's are simply observed values)
+%   delta2 = delta3*Theta2.*sigmoidGradient(a2);
+%   % size(delta3)
+%   % size(Theta2)
+%   % size(delta2)
+%   % size(sigmoidGradient(a2))
+
+Theta1 = randInitializeWeights(400,25);
+Theta2 = randInitializeWeights(25,10);
+y(1:10,:)
+
+
+for i=1:1
+  %Calculate a2's & a3's
+  a1 = inputsOfL1 = X(i,:);
+  a2 = outputsOfL1 = sigmoid(inputsOfL1*Theta1');  % these are the a superscript 2s
+  inputsOfL2 = [ones(size(outputsOfL1,1),1) outputsOfL1];       % adding the bias unit
+  a3 = outputsOfL2 =predicted= sigmoid(inputsOfL2*Theta2')';
+
+  for j=1:K2
+    act = y(i,:)==j
+    d3(j,:)=predicted(j,:)-act
+  end
+
+end
+
+
+
+
+
+
+
 % Part 3: Implement regularization with the cost function and gradients.
 %
 %         Hint: You can implement this around the code for
