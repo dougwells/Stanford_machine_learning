@@ -33,8 +33,8 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
 % Setup some useful variables
 L = 2;
 m = size(X, 1);
-K1 = size(Theta1,1);
-K2 = size (Theta2,1);
+K1 = size(Theta1,1)
+K2 = size (Theta2,1)
 
 % Add column of 1's to X
 X=[ones(m,1) X];
@@ -145,21 +145,30 @@ Theta2 = randInitializeWeights(25,10);    % --> (10 x 26)
 %Forward Propogation.  NN output based on first training example
 % & initial random thetas
 
-for i=1:1
+for I=1:1  %(I = 1 to m.  One for each training sample)
   %Calculate a2's & a3's
-  a1 = inputsOfL1 = X(i,:);
+  a1 = inputsOfL1 = X(I,:);
   a2 = outputsOfL1 = sigmoid(inputsOfL1*Theta1');  % these are the a superscript 2s
   inputsOfL2 = [ones(size(outputsOfL1,1),1) outputsOfL1];  % adding the bias unit
   a3 = outputsOfL2 =predicted= sigmoid(inputsOfL2*Theta2')';
 
-  for j=1:K2
-    act = y(i,:)==j;
-    d3(j,:)=predicted(j,:)-act;
+  for j=1:K2    %K2 = # of output classes (is this a 1 or not?  is this a 2 or not, etc)
+    act = y(I,:)==k;
+    d3(j,:)=predicted(k,:)-act;
   end
 
-  for j=1:K2
-    d2(j,:)=d3()
+  for i=1:K1    %K1 = number of units in Layer 2/hidden layer.  Bypass bias unit
+    for j=1:K2
+      dTemp(i,j)=Theta2(j,i+1)*d3(j,:);
+    end
+    d2(i,:) = sum(dTemp(i,:));
   end
+  d2;
+  dTest=Theta2'*d3;
+  d2Test = dTest(2:end,:);
+  size(d2)
+  size(d2Test)
+  d2Test-d2
 
 
 
