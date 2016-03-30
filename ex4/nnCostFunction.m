@@ -24,8 +24,8 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
 
 % size(X)
 % size(y)
-% size(Theta1);
-% size(Theta2);
+% size(Theta1)
+% size(Theta2)
 % y(990:1020,1)'
 
 
@@ -38,9 +38,9 @@ K2 = size (Theta2,1);
 
 % Add column of 1's to X
 X=[ones(m,1) X];
-% size(X)
-% size(Theta1)
-% size(Theta2)
+size(X)
+size(Theta1)
+size(Theta2)
 
 % You need to return the following variables correctly
 J = 0;
@@ -138,22 +138,30 @@ Theta2_grad = zeros(size(Theta2));
 %   % size(delta2)
 %   % size(sigmoidGradient(a2))
 
-Theta1 = randInitializeWeights(400,25);
-Theta2 = randInitializeWeights(25,10);
-y(1:10,:)
+% Initialize random thetas as a "guess".  (L_in, L_out) --> matrix(L_out,L_in+1)
+Theta1 = randInitializeWeights(400,25);   % --> (25 x 401)
+Theta2 = randInitializeWeights(25,10);    % --> (10 x 26)
 
+%Forward Propogation.  NN output based on first training example
+% & initial random thetas
 
 for i=1:1
   %Calculate a2's & a3's
   a1 = inputsOfL1 = X(i,:);
   a2 = outputsOfL1 = sigmoid(inputsOfL1*Theta1');  % these are the a superscript 2s
-  inputsOfL2 = [ones(size(outputsOfL1,1),1) outputsOfL1];       % adding the bias unit
+  inputsOfL2 = [ones(size(outputsOfL1,1),1) outputsOfL1];  % adding the bias unit
   a3 = outputsOfL2 =predicted= sigmoid(inputsOfL2*Theta2')';
 
   for j=1:K2
-    act = y(i,:)==j
-    d3(j,:)=predicted(j,:)-act
+    act = y(i,:)==j;
+    d3(j,:)=predicted(j,:)-act;
   end
+
+  for j=1:K2
+    d2(j,:)=d3()
+  end
+
+
 
 end
 
