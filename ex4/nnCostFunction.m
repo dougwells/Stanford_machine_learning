@@ -166,10 +166,10 @@ Theta2_grad = zeros(size(Theta2));
 % Regularize the Gradients (penalize with lambda)
 
   % Modify Theta1 & Theta2 to make easier to regularize (make first column of each = 0)
-    Theta1(:,1)=0;
-    Theta2(:,1)=0;
-    size(Theta1)  % --> 25x401
-    size(Theta2)  % --> 10x26
+    Theta1(:,1)=0;  %(first column is all 0s)
+    Theta2(:,1)=0;  %(first column is all 0s)
+    size(Theta1);  % --> 25x401
+    size(Theta2);  % --> 10x26
 
   % Scale Theta1 & Theta2 by lamda/m
     regularizationTheta1 = Theta1*(lambda/(m));
@@ -178,8 +178,8 @@ Theta2_grad = zeros(size(Theta2));
   % Add regularized Theta matrices to unregularized Theta Gradients
     Theta1_grad = Theta1_grad + regularizationTheta1;
     Theta2_grad = Theta2_grad + regularizationTheta2;
-    size(Theta1_grad)
-    size(Theta2_grad)
+    size(Theta1_grad); % --> 25x401
+    size(Theta2_grad); % --> 10x26
 
 % % Initialize random thetas as a "guess".  (L_in, L_out) --> matrix(L_out,L_in+1)
 % Theta1 = randInitializeWeights(400,25);   % --> (25 x 401)
