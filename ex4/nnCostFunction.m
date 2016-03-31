@@ -27,7 +27,7 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
 % size(y)
 % size(Theta1)
 % size(Theta2)
-% y(990:1020,1)'
+% y(995:1005,1)'
 
 
 
@@ -63,52 +63,45 @@ Theta2_grad = zeros(size(Theta2));
 % In this case, there are 400 units in Layer 1 and 25 units in Layer 2.
 % Each of the L2's 25 units has 400 inputs plus the bias.
 % Note: We don't include bias/1s in thetaPenalty
-  for k=1:K1
-    currTheta = Theta1(k,:)';
-    thetaZero = currTheta(1,:);
-    thetaAllLessZero=currTheta(2:end,:);
-    costPenaltyTheta1(k,1) = sum(thetaAllLessZero.^2)*(lambda/(2*m));
-  end
-
-% Compute a's (how close to 1 or 0 is each of the g(X*Theta1)?)
-  a1 = inputsOfL1 = X;
-  a2 = outputsOfL1 = sigmoid(a1*Theta1');  % these are the a superscript 2s
-  a2 = inputsOfL2 = [ones(m,1) a2];       % adding the bias unit
-  a3Array = outputsOfL2 = sigmoid(a2*Theta2');
 
 
-% Loop over each activation in Level 2/Output
+% Compute a's ("activations").      = g(z) where z=X*Theta'
+  a1 = inputsOfL1 = X;              %Bias unit already included
+  z2 = a1*Theta1';
+  a2 = outputsOfL1 = sigmoid(z2);   % these are the a superscript 2s
+  a2wBias = inputsOfL2 = [ones(m,1) a2];       % adding the bias unit
+  z3 = a2wBias*Theta2';
+  a3 = outputsOfL2 = sigmoid(z3);
+
+% Output so 1 column per label
   for k=1:K2
-
-    % Compute outputs of L2
-    currTheta = Theta2(k,:)';
-    a3(:,k)=pred = sigmoid(inputsOfL2*currTheta);   % a superscript 3s
-
-    % Compare outputs of L2 to actual results.
-    act=(y==k);
-    Y(:,k)=(y==k);
-
-    % Calculate costs for each activation w/its parameters/weights/thetas
-    err1 = -act.*log(pred);
-    err2= (1-act).*log(1-pred);
-    diffErr=pred-act;
-    logErr = err1-err2;
-    thetaZero = currTheta(1,:);
-    thetaAllLessZero=currTheta(2:end,:);
-    costPenaltyTheta2(k,1) = sum(thetaAllLessZero.^2)*(lambda/(2*m));
-    % "Comment out" cost penalty here.  Will add in down below
-    J(k,1)=(sum(logErr)/m); %+ costPenalty;
-
-% end L2 loop
+    Y(:,k) = (y==k);
   end
 
+% Compare outputs of L2 to actual results.
+  act=Y;
+  pred=a3;
+  currTheta = Theta2(k,:)';
+
+% Calculate costs for each activation w/its parameters/weights/thetas
+  err1 = -act.*log(pred);
+  err2= (1-act).*log(1-pred);
+  diffErr=pred-act;
+  logErr = err1-err2;
+  theta1AllLessZero=Theta1'(2:end,:);
+  costPenaltyTheta1 = sum(theta1AllLessZero.^2)*(lambda/(2*m));
+  theta2AllLessZero=Theta2'(2:end,:);
+  costPenaltyTheta2 = sum(theta2AllLessZero.^2)*(lambda/(2*m));
+
+% "Comment out" cost penalty here.  Will add in down below
+  J=(sum(logErr)/m); %+ costPenalty;
 
 % Summarize total costs (1 per activation) + add theta Penalties
   costPenaltyTheta1 = sum(costPenaltyTheta1);
   costPenaltyTheta2 = sum(costPenaltyTheta2);
   J=sum(J)+costPenaltyTheta1 + costPenaltyTheta2;
 
-% Y(990:1010,1)'
+
 
 
 
@@ -133,6 +126,27 @@ Theta2_grad = zeros(size(Theta2));
 % for k = 1:K2
 %   delta3(:,k) = sum(Y(:,k)-a3(:,k));
 % end
+  d3 = a3-Y;
+  Theta2LessBias = Theta2(:,2:end);
+
+  d2=d3*Theta2LessBias;
+  size(d2)
+  size(a2)
+  size(z2)
+
+  % add g-prime (sigmoidGradient) to d2Array
+    d2 = d2.*a2.*(1-a2);
+    d2a = d2.*a2.*(1-a2);
+    d2Manual = d2.*sigmoid(z2).*(1-sigmoid(z2));
+    d2Test = d2.*sigmoidGradient(z2);
+    % g-prime = gTrad.*(1-gTrad);
+    sum(sum(d2))
+    sum(sum(d2a))
+    sum(sum(d2Manual))
+    sum(sum(d2Test))
+    sum(sum(a2))/10000
+    sum(sum(sigmoid(z2)))/10000
+
 %
 % % Calculate delta2 (note: no delta1 as a1's are simply observed values)
 %   delta2 = delta3*Theta2.*sigmoidGradient(a2);
@@ -141,46 +155,65 @@ Theta2_grad = zeros(size(Theta2));
 %   % size(delta2)
 %   % size(sigmoidGradient(a2))
 
-% Initialize random thetas as a "guess".  (L_in, L_out) --> matrix(L_out,L_in+1)
-Theta1 = randInitializeWeights(400,25);   % --> (25 x 401)
-Theta2 = randInitializeWeights(25,10);    % --> (10 x 26)
-
-%Forward Propogation.  NN output based on first training example
-% & initial random thetas
-
-for t=1:1  %(t = 1 to m.  One for each training sample)
-  %Calculate a2's & a3's
-  a1 = inputsOfL1 = X(t,:);
-  a2 = outputsOfL1 = sigmoid(inputsOfL1*Theta1');  % these are the a superscript 2s (1x25)
-  inputsOfL2 = [ones(size(outputsOfL1,1),1) outputsOfL1];  % adding the bias unit
-  a3 = outputsOfL2 =predicted= sigmoid(inputsOfL2*Theta2')';
-
-  for j=1:K2    %K2 = # of output classes (is this a 1 or not?  is this a 2 or not, etc)
-    act = y(t,:)==k;
-    d3(j,:)=predicted(k,:)-act;
-  end
-
-% Calculate d2 using for-loop
-% K1 = number of units in Layer 2/first hidden layer.
-% i+1 --> to Bypass bias unit
-  for i=1:K1
-    for j=1:K2
-      dTemp(i,j)=Theta2(j,i+1)*d3(j,:);
-    end
-    d2(i,:) = sum(dTemp(i,:));
-  end
-  size(d2)
-
-% Calculate d2 using an array
-  dArray=Theta2'*d3;
-  d2Array = dArray(2:end,:);
-  size(d2Array)
-  size(a2)
-
-% add g-prime (sigmoidGradient) to d2Array
-  % d2 = d2.*a2.*(1-a2);
-
-end
+% % Initialize random thetas as a "guess".  (L_in, L_out) --> matrix(L_out,L_in+1)
+% Theta1 = randInitializeWeights(400,25);   % --> (25 x 401)
+% Theta2 = randInitializeWeights(25,10);    % --> (10 x 26)
+%
+% %Forward Propogation.  NN output based on first training example
+% % & initial random thetas
+%
+% for t=1:1  %(t = 1 to m.  One for each training sample)
+%   %Calculate a2's & a3's
+%   a1(t,:) = inputsOfL1(t,:) = X(t,:);
+%   size(a1)
+%   size(Theta1')
+%   a2(t,:)= outputsOfL1(t,:) = sigmoid(inputsOfL1(t,:)*Theta1');  % these are the a superscript 2s (1x25)
+%   size(a2)
+%   inputsOfL2(t,:) = [ones(size(outputsOfL1(t,:),1),1) outputsOfL1(t,:)];  % adding the bias unit
+%   a3(t,:) = outputsOfL2(t,:) =predicted(t,:)= sigmoid(inputsOfL2(t,:)*Theta2')';
+%   size(predicted)
+%
+%   for j=1:K2    %K2 = # of output classes (is this a 1 or not?  is this a 2 or not, etc)
+%     act = y(t,:)==k;
+%     d3(j,:)=predicted(k,:)-act;
+%   end
+%
+% % Calculate d2 using for-loop
+% % K1 = number of units in Layer 2/first hidden layer.
+% % i+1 --> to Bypass bias unit
+%   for i=1:K1
+%     for j=1:K2
+%       dTemp(i,j)=Theta2(j,i+1)*d3(j,:);
+%     end
+%     d2(i,:) = sum(dTemp(i,:));
+%   end
+%   % size(d2)
+%
+% % Calculate d2 using an array (1 row per unit at that level --> (#units x 1))
+%   dArray=Theta2'*d3;
+%   d2Array = dArray(2:end,:);
+%
+%
+% % add g-prime (sigmoidGradient) to d2Array
+% % note:  I am keeping a2 format same as X (each test case is a row)
+% % need to transpose a2 as each test case's input is actually its columns
+%   d2 = d2.*a2'.*(1-a2');
+%
+% Delta=0;
+% % for i=1:K1
+% %   for j=1:K2
+% %     Delta2(i,j) = a2(i,j)*d3(j);
+% %     % Delta2(i,j) = d3(j,:)*a2(i,j)'
+% %   end
+% % end
+% % size(Delta2)
+%
+% Delta=d3*a2;
+% size(Delta)
+%
+%
+%
+% end
 
 
 
