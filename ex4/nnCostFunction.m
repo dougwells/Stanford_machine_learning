@@ -122,38 +122,43 @@ Theta2_grad = zeros(size(Theta2));
 %               over the training examples if you are implementing it for the
 %               first time.
 %
-% Calculate delta3 (actual - predicted)
-% for k = 1:K2
-%   delta3(:,k) = sum(Y(:,k)-a3(:,k));
-% end
+
+% For backpropagation, we want Theta's w/o bias
+    Theta1LessBias = Theta1(:,2:end);
+    Theta2LessBias = Theta2(:,2:end);
+
+% Dimension Check
+  % z2 = a1*Theta1'
+    size(a1);                 % --> 5000 x 401
+    size(Theta1LessBias);     % --> 25 x 400
+    size(z2);                 % --> 5000 x 25
+
+  % z3 = a2*Theta2'
+    size(a2wBias);            % --> 5000 x 26
+    size(a2);                 % --> 5000 x 25
+    size(Theta2LessBias);     % --> 10 x 25
+    size(z3);                 % --> 5000 x 10
+
+
+% d3 is simply predicted less actual (not Y = 5,000x10)
   d3 = a3-Y;
-  Theta2LessBias = Theta2(:,2:end);
 
+% Calculate d2
   d2=d3*Theta2LessBias;
-  size(d2)
-  size(a2)
-  size(z2)
+  d2 = d2.*sigmoidGradient(z2);  % elementwise multiply d2 by sigmoidGradient
 
-  % add g-prime (sigmoidGradient) to d2Array
-    d2 = d2.*a2.*(1-a2);
-    d2a = d2.*a2.*(1-a2);
-    d2Manual = d2.*sigmoid(z2).*(1-sigmoid(z2));
-    d2Test = d2.*sigmoidGradient(z2);
-    % g-prime = gTrad.*(1-gTrad);
-    sum(sum(d2))
-    sum(sum(d2a))
-    sum(sum(d2Manual))
-    sum(sum(d2Test))
-    sum(sum(a2))/10000
-    sum(sum(sigmoid(z2)))/10000
+% Dimension Check
+  size(d2); % --> 5000 x 25
+  size(d3); % --> 5000 x 10
 
-%
-% % Calculate delta2 (note: no delta1 as a1's are simply observed values)
-%   delta2 = delta3*Theta2.*sigmoidGradient(a2);
-%   % size(delta3)
-%   % size(Theta2)
-%   % size(delta2)
-%   % size(sigmoidGradient(a2))
+Delta1 = d2'*a1;
+size(Delta1); % --> 25 x 401
+
+Delta2 = d3'*a2wBias;
+size(Delta2);  % --> 10 x 26
+
+Theta1_grad = Delta1./m;
+Theta2_grad = Delta2./m;
 
 % % Initialize random thetas as a "guess".  (L_in, L_out) --> matrix(L_out,L_in+1)
 % Theta1 = randInitializeWeights(400,25);   % --> (25 x 401)
