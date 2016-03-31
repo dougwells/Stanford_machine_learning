@@ -22,6 +22,7 @@ Theta1 = reshape(nn_params(1:hidden_layer_size * (input_layer_size + 1)), ...
 Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):end), ...
                  num_labels, (hidden_layer_size + 1));
 
+% Check sizes of matrices
 % size(X)
 % size(y)
 % size(Theta1)
@@ -33,14 +34,14 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
 % Setup some useful variables
 L = 2;
 m = size(X, 1);
-K1 = size(Theta1,1)
-K2 = size (Theta2,1)
+K1 = size(Theta1,1);
+K2 = size (Theta2,1);
 
 % Add column of 1's to X
 X=[ones(m,1) X];
-size(X)
-size(Theta1)
-size(Theta2)
+size(X);
+size(Theta1);
+size(Theta2);
 
 % You need to return the following variables correctly
 J = 0;
@@ -69,10 +70,11 @@ Theta2_grad = zeros(size(Theta2));
     costPenaltyTheta1(k,1) = sum(thetaAllLessZero.^2)*(lambda/(2*m));
   end
 
-% Compute a2's (how close to 1 or 0 is each of the g(X*Theta1)?)
+% Compute a's (how close to 1 or 0 is each of the g(X*Theta1)?)
   a1 = inputsOfL1 = X;
-  a2 = outputsOfL1 = sigmoid(inputsOfL1*Theta1');  % these are the a superscript 2s
-  inputsOfL2 = [ones(m,1) outputsOfL1];       % adding the bias unit
+  a2 = outputsOfL1 = sigmoid(a1*Theta1');  % these are the a superscript 2s
+  a2 = inputsOfL2 = [ones(m,1) a2];       % adding the bias unit
+  a3Array = outputsOfL2 = sigmoid(a2*Theta2');
 
 
 % Loop over each activation in Level 2/Output
@@ -99,6 +101,7 @@ Theta2_grad = zeros(size(Theta2));
 
 % end L2 loop
   end
+
 
 % Summarize total costs (1 per activation) + add theta Penalties
   costPenaltyTheta1 = sum(costPenaltyTheta1);
@@ -145,32 +148,37 @@ Theta2 = randInitializeWeights(25,10);    % --> (10 x 26)
 %Forward Propogation.  NN output based on first training example
 % & initial random thetas
 
-for I=1:1  %(I = 1 to m.  One for each training sample)
+for t=1:1  %(t = 1 to m.  One for each training sample)
   %Calculate a2's & a3's
-  a1 = inputsOfL1 = X(I,:);
-  a2 = outputsOfL1 = sigmoid(inputsOfL1*Theta1');  % these are the a superscript 2s
+  a1 = inputsOfL1 = X(t,:);
+  a2 = outputsOfL1 = sigmoid(inputsOfL1*Theta1');  % these are the a superscript 2s (1x25)
   inputsOfL2 = [ones(size(outputsOfL1,1),1) outputsOfL1];  % adding the bias unit
   a3 = outputsOfL2 =predicted= sigmoid(inputsOfL2*Theta2')';
 
   for j=1:K2    %K2 = # of output classes (is this a 1 or not?  is this a 2 or not, etc)
-    act = y(I,:)==k;
+    act = y(t,:)==k;
     d3(j,:)=predicted(k,:)-act;
   end
 
-  for i=1:K1    %K1 = number of units in Layer 2/hidden layer.  Bypass bias unit
+% Calculate d2 using for-loop
+% K1 = number of units in Layer 2/first hidden layer.
+% i+1 --> to Bypass bias unit
+  for i=1:K1
     for j=1:K2
       dTemp(i,j)=Theta2(j,i+1)*d3(j,:);
     end
     d2(i,:) = sum(dTemp(i,:));
   end
-  d2;
-  dTest=Theta2'*d3;
-  d2Test = dTest(2:end,:);
   size(d2)
-  size(d2Test)
-  d2Test-d2
 
+% Calculate d2 using an array
+  dArray=Theta2'*d3;
+  d2Array = dArray(2:end,:);
+  size(d2Array)
+  size(a2)
 
+% add g-prime (sigmoidGradient) to d2Array
+  % d2 = d2.*a2.*(1-a2);
 
 end
 
