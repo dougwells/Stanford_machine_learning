@@ -151,14 +151,35 @@ Theta2_grad = zeros(size(Theta2));
   size(d2); % --> 5000 x 25
   size(d3); % --> 5000 x 10
 
-Delta1 = d2'*a1;
-size(Delta1); % --> 25 x 401
+% Compute Delta1 and Delta2 (gradients for Theta1 & Theta2).
+% Want to use a's WITH bias units
 
-Delta2 = d3'*a2wBias;
-size(Delta2);  % --> 10 x 26
+  Delta1 = d2'*a1;
+  size(Delta1); % --> 25 x 401
 
-Theta1_grad = Delta1./m;
-Theta2_grad = Delta2./m;
+  Delta2 = d3'*a2wBias;
+  size(Delta2);  % --> 10 x 26
+
+  Theta1_grad = Delta1./m;  % --> 25x401
+  Theta2_grad = Delta2./m;  % --> 10x26
+
+% Regularize the Gradients (penalize with lambda)
+
+  % Modify Theta1 & Theta2 to make easier to regularize (make first column of each = 0)
+    Theta1(:,1)=0;
+    Theta2(:,1)=0;
+    size(Theta1)  % --> 25x401
+    size(Theta2)  % --> 10x26
+
+  % Scale Theta1 & Theta2 by lamda/m
+    regularizationTheta1 = Theta1*(lambda/(m));
+    regularizationTheta2 = Theta2*(lambda/(m));
+
+  % Add regularized Theta matrices to unregularized Theta Gradients
+    Theta1_grad = Theta1_grad + regularizationTheta1;
+    Theta2_grad = Theta2_grad + regularizationTheta2;
+    size(Theta1_grad)
+    size(Theta2_grad)
 
 % % Initialize random thetas as a "guess".  (L_in, L_out) --> matrix(L_out,L_in+1)
 % Theta1 = randInitializeWeights(400,25);   % --> (25 x 401)
