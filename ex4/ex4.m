@@ -30,19 +30,27 @@ num_labels = 10;          % 10 labels, from 1 to 10
 %
 
 % Load Training Data
-fprintf('Loading and Visualizing Data ...\n')
-
 load('ex4data1.mat');
 m = size(X, 1);
 
 % Randomly select 100 data points to display
 sel = randperm(size(X, 1));
 sel = sel(1:100);
-
 displayData(X(sel, :));
+
+
+fprintf('Algorithm inputs for number in upper left corner of grid ...\n')
+sample = X(sel(1,1),:);
+unNorm = round(sample.*256.+123);
+unNormMatrix = reshape(unNorm',50,8);
+rawInputData=unNormMatrix(1:10,1:8)
+
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
+
+% selX = sel(1,:);
+% Input_Data = reshape(selX,20,20)'
 
 
 %% ================ Part 2: Loading Parameters ================
