@@ -11,7 +11,10 @@ hold on;
 % an idea of how the fit will vary outside the range of the data points
 x = (min_x - 15: 0.05 : max_x + 25)';
 
-% Map the X values 
+% Doug added this line of code to set range of x & y axis
+limits = [min_x - 15, max_x + 25, 0, 40]
+
+% Map the X values
 X_poly = polyFeatures(x, p);
 X_poly = bsxfun(@minus, X_poly, mu);
 X_poly = bsxfun(@rdivide, X_poly, sigma);
@@ -20,6 +23,7 @@ X_poly = bsxfun(@rdivide, X_poly, sigma);
 X_poly = [ones(size(x, 1), 1) X_poly];
 
 % Plot
+axis(limits);   %Apply limits to x & y axis
 plot(x, X_poly * theta, '--', 'LineWidth', 2)
 
 % Hold off to the current figure

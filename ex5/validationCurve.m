@@ -17,29 +17,50 @@ error_train = zeros(length(lambda_vec), 1);
 error_val = zeros(length(lambda_vec), 1);
 
 % ====================== YOUR CODE HERE ======================
-% Instructions: Fill in this function to return training errors in 
-%               error_train and the validation errors in error_val. The 
-%               vector lambda_vec contains the different lambda parameters 
-%               to use for each calculation of the errors, i.e, 
-%               error_train(i), and error_val(i) should give 
-%               you the errors obtained after training with 
+% Instructions: Fill in this function to return training errors in
+%               error_train and the validation errors in error_val. The
+%               vector lambda_vec contains the different lambda parameters
+%               to use for each calculation of the errors, i.e,
+%               error_train(i), and error_val(i) should give
+%               you the errors obtained after training with
 %               lambda = lambda_vec(i)
 %
 % Note: You can loop over lambda_vec with the following:
 %
 %       for i = 1:length(lambda_vec)
 %           lambda = lambda_vec(i);
-%           % Compute train / val errors when training linear 
+%           % Compute train / val errors when training linear
 %           % regression with regularization parameter lambda
 %           % You should store the result in error_train(i)
 %           % and error_val(i)
 %           ....
-%           
+%
 %       end
 %
 %
 
+% Dimension check
+% size(X)
+% size(y)
+% size(Xval)
+% size(yval)
 
+% Set lambda = 0 for training and validation
+lambdaTrain   = 0;  % No theta penalty in calculating cost function for Training
+lambdaVal     = 0;  % No theta penalty in calculating cost function for Cross Validation
+
+for i=1:length(lambda_vec)
+  lambda = lambda_vec(i);
+  [theta] = trainLinearReg(X, y, lambda);     % train new theta vector for value of Lamda.
+                                                            % NOTE:  Need full J (w/theta penalty) to find thetas
+
+  [Jtrain(i,:), grad] = linearRegCostFunction(X, y, theta, lambdaTrain);  % No theta penalty since thetas already found above
+  [Jval(i,:), grad] = linearRegCostFunction(Xval, yval, theta, lambdaVal);              % Run over full validation dataset each time
+end
+
+
+error_train = Jtrain;
+error_val = Jval;
 
 
 

@@ -75,24 +75,6 @@ end
 error_train = Jtrain;
 error_val = Jval;
 
-
-
-
-
-
-
-% for i=1:m
-% [J, grad] = linearRegCostFunction(X(1:i,:), y(i:i), theta, lambda);
-% J(i,:) = J;
-% theta = theta-grad
-%
-% end
-
-
-
-
-
-
 % -------------------------------------------------------------
 
 % =========================================================================
