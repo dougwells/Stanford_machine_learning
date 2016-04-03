@@ -3,8 +3,14 @@ function sim = gaussianKernel(x1, x2, sigma)
 %   sim = gaussianKernel(x1, x2) returns a gaussian kernel between x1 and x2
 %   and returns the value in sim
 
+% Dataset
+  % x1 = [1 2 1]; x2 = [0 4 -1]; sigma = 2;
+  % sim = gaussianKernel(x1, x2, sigma);
+
 % Ensure that x1 and x2 are column vectors
-x1 = x1(:); x2 = x2(:);
+x1 = x1(:);
+x2 = x2(:);
+
 
 % You need to return the following variables correctly.
 sim = 0;
@@ -15,12 +21,35 @@ sim = 0;
 %               sigma
 %
 %
+diff = x1-x2
+numerator = sum(diff.^2);
+denom = 2*sigma.^2
+kGaus = exp(-numerator./denom);
+sim = kGaus;
+% sim = exp(-sum((x1 - x2).^2)/(2 * (sigma^2)));
 
+
+% for i = 1:n
+%   l(i,1)=(x1(i,1)-x2(i,1)).*2;
+% end
+%
+% numerator = sum(sum(l));
+% denom = 2*sigma.^2;
+% inside = numerator/denom
+% gK = exp(-inside);
+% sim = gK;
+
+
+% for i = 1:n
+%   lhoriz(i) = x1(i);
+%   lvert(i) =x2(i);
+%   a2(i) =
+% end
 
 
 
 
 
 % =============================================================
-    
+
 end
