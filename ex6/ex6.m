@@ -55,8 +55,17 @@ C = 1;
 
 model = svmTrain(X, y, C, @linearKernel, 1e-3, 20);
 visualizeBoundaryLinear(X, y, model);
-
 fprintf('Program paused. Press enter to continue.\n');
+pause;
+
+plot(model.X(:,1),model.X(:,2), 'k+', 'MarkerSize', 7);
+% % Plot Examples
+% plot(X(pos, 1), X(pos, 2), 'k+','LineWidth', 1, 'MarkerSize', 7)
+% hold on;
+% plot(X(neg, 1), X(neg, 2), 'ko', 'MarkerFaceColor', 'y', 'MarkerSize', 7)
+% hold off;
+
+fprintf('Landmarks chosen.  Program paused. Press enter to continue.\n');
 pause;
 
 %% =============== Part 3: Implementing Gaussian Kernel ===============
@@ -156,6 +165,7 @@ load('ex6data3.mat');
 % Train the SVM
 model= svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma));
 visualizeBoundary(X, y, model);
+plot(model.X(:,1),model.X(:,2), 'k+', 'MarkerSize', 7);
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
