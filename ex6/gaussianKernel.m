@@ -21,30 +21,14 @@ sim = 0;
 %               sigma
 %
 %
-diff = x1-x2
-numerator = sum(diff.^2);
-denom = 2*sigma.^2
-kGaus = exp(-numerator./denom);
-sim = kGaus;
-% sim = exp(-sum((x1 - x2).^2)/(2 * (sigma^2)));
 
-
-% for i = 1:n
-%   l(i,1)=(x1(i,1)-x2(i,1)).*2;
-% end
-%
-% numerator = sum(sum(l));
+% diff = x1-x2;
+% numerator = sum(diff.^2);
 % denom = 2*sigma.^2;
-% inside = numerator/denom
-% gK = exp(-inside);
-% sim = gK;
+% sim = kGaus = exp(-numerator./denom);
 
+sim = kGaus = exp(-sum((x1-x2).^2)./(2*sigma^2));
 
-% for i = 1:n
-%   lhoriz(i) = x1(i);
-%   lvert(i) =x2(i);
-%   a2(i) =
-% end
 
 
 
