@@ -37,8 +37,8 @@ fprintf('Word Indices: \n');
 fprintf(' %d', word_indices);
 fprintf('\n\n');
 
-fprintf('Program paused. Press enter to continue.\n');
-pause;
+% fprintf('Program paused. Press enter to continue.\n');
+% pause;
 
 %% ==================== Part 2: Feature Extraction ====================
 %  Now, you will convert each email into a vector of features in R^n.
@@ -56,8 +56,8 @@ features      = emailFeatures(word_indices);
 fprintf('Length of feature vector: %d\n', length(features));
 fprintf('Number of non-zero entries: %d\n', sum(features > 0));
 
-fprintf('Program paused. Press enter to continue.\n');
-pause;
+% fprintf('Program paused. Press enter to continue.\n');
+% pause;
 
 %% =========== Part 3: Train Linear SVM for Spam Classification ========
 %  In this section, you will train a linear classifier to determine if an
@@ -92,8 +92,8 @@ p = svmPredict(model, Xtest);
 
 fprintf('Size of Test Set: %f\n', size(Xtest));
 fprintf('Test Accuracy: %f\n', mean(double(p == ytest)) * 100);
-fprintf('\nProgram paused. Press enter to continue.\n');
-pause;
+% fprintf('\nProgram paused. Press enter to continue.\n');
+% pause;
 
 
 %% ================= Part 5: Top Predictors of Spam ====================
@@ -108,14 +108,14 @@ pause;
 [weight, idx] = sort(model.w, 'descend');
 vocabList = getVocabList();
 
-fprintf('\nTop predictors of spam: \n');
-for i = 1:15
-    fprintf(' %-15s (%f) \n', vocabList{idx(i)}, weight(i));
-end
-
-fprintf('\n\n');
-fprintf('\nProgram paused. Press enter to continue.\n');
-pause;
+% fprintf('\nTop predictors of spam: \n');
+% for i = 1:15
+%     fprintf(' %-15s (%f) \n', vocabList{idx(i)}, weight(i));
+% end
+%
+% fprintf('\n\n');
+% fprintf('\nProgram paused. Press enter to continue.\n');
+% pause;
 
 %% =================== Part 6: Try Your Own Emails =====================
 %  Now that you've trained the spam classifier, you can use it on your own
@@ -129,10 +129,7 @@ pause;
 % emailSample1.txt or emailSample2.txt to see different predictions on
 % different emails types). Try your own emails as well!
 
-testEmailFileNames = {'spamSample1.txt'; 'spamSample2.txt'; 'emailSample1.txt'; ...
-'emailSample2.txt'; 'emailSample3.txt'; 'emailSample4.txt'; 'emailSample5.txt'; ...
-'emailSample6.txt'; 'emailSample7.txt'; 'emailSample8.txt'; 'emailSample9.txt'; ...
-'emailSample10.txt'};
+testEmailFileNames = {'spamSample1.txt'; 'spamSample2.txt'; 'emailSample1.txt'; 'emailSample2.txt'; 'emailSample3.txt'; 'emailSample4.txt'; 'emailSample5.txt'; 'emailSample6.txt'; 'emailSample7.txt'; 'emailSample8.txt'; 'emailSample9.txt'; 'emailSample10.txt'};
 
 for i=1:12
   filename = testEmailFileNames{i,1};
@@ -140,7 +137,7 @@ for i=1:12
   word_indices  = processEmail(file_contents);
   x             = emailFeatures(word_indices);
   p = svmPredict(model, x);
-  decision(i,1)=p;
+  decision(i,1)=p
   % fprintf('\nProcessed %s\n\nSpam Classification: %d\n', filename, p);
   fprintf('(1 indicates spam, 0 indicates not spam)\n\n');
 end
