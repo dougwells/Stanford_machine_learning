@@ -33,20 +33,24 @@ idx = zeros(size(X,1), 1);
 for i = 1:m
     min = 1000;
     for j = 1:K
+      % Two ways to calculate Euclidean distance between vectors.  Both Work
 
-        dist = norm(X(i,:)-centroids(j,:)).^2;
+        % Method 1:  Use Matlab built-in fn "norm"
+          dist = norm(X(i,:)-centroids(j,:)).^2;
 
-        % dist = ((X(i,1)-centroids(j,1)).^2 + (X(i,2)-centroids(j,2)).^2 );
-          % Works but doesn't pass "submit" test.
-          % Likely because limited to 2 features (j=2 or less)
+        % Method 2:  Calculate Euclidean Distance Ourselves
+          % diff = X(i,:)-centroids(j,:);
+          % dist = sum(diff.^2);
 
+        % Method 3 Does NOT work since only calculates if vectors have 2 features or less
+          % dist = ((X(i,1)-centroids(j,1)).^2 + (X(i,2)-centroids(j,2)).^2 );
+
+        Distance(i,j) = dist;
         if dist < min
           idx(i)=j;
           min = dist;
         end
     end
 end
-
 % =============================================================
-
 end
