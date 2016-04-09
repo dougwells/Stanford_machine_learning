@@ -44,7 +44,7 @@ for k =1:K
   centroids(k,:) = centroids(k,:)./count(k,1);
 end
 
-centroids
+centroids;
 
 
 
