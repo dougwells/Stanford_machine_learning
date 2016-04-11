@@ -8,7 +8,7 @@ function [mu sigma2] = estimateGaussian(X)
 %
 
 % Useful variables
-[m, n] = size(X)
+[m, n] = size(X);
 
 % You should return these values correctly
 mu = zeros(n, 1);
@@ -22,13 +22,10 @@ sigma2 = zeros(n, 1);
 %
 
 muT = sum(X)/m;
-mu = muT'
+mu = muT';
 
-for i =1:m
-  diffSq(i,:) = (X(i,:)-mu').^2;
-end
-
-sigma2 = sum(diffSq)./m
+  diffSq = bsxfun(@minus, X, mu').^2;
+  sigma2 = sum(diffSq)'./m;
 
 
 
