@@ -54,8 +54,8 @@ featurePenalty = lambda/2*sum(diag(X*X'));
 
 J = 0.5 * sum(sum(R.*(Prediction-Y).^2)) + paramPenalty + featurePenalty;
 
-X_grad = R.*(Prediction-Y)*Theta;
-Theta_grad = (R.*(Prediction-Y))'*X;
+X_grad = R.*(Prediction-Y)*Theta + lambda*X;
+Theta_grad = (R.*(Prediction-Y))'*X + lambda*Theta;
 
 
 
