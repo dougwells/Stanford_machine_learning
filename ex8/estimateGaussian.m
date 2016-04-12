@@ -9,6 +9,7 @@ function [mu sigma2] = estimateGaussian(X)
 
 % Useful variables
 [m, n] = size(X);
+% hist(X(:,2),20)
 
 % You should return these values correctly
 mu = zeros(n, 1);
