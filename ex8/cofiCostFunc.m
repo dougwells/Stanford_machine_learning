@@ -49,7 +49,10 @@ Theta_grad = zeros(size(Theta));
 Prediction = X*Theta';    % 5x3 * 3x4 = 5 movies by 4 users matrix
 
 % Only predict if R(i,j)<>0
-J = 0.5 * sum(sum(R.*(Prediction-Y).^2));
+paramPenalty = lambda/2*sum(diag(Theta*Theta'));
+featurePenalty = lambda/2*sum(diag(X*X'));
+
+J = 0.5 * sum(sum(R.*(Prediction-Y).^2)) + paramPenalty + featurePenalty;
 
 X_grad = R.*(Prediction-Y)*Theta;
 Theta_grad = (R.*(Prediction-Y))'*X;
