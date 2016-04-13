@@ -1,0 +1,10 @@
+Stochastic = randomly selected
+  Run modified gradient descent on each datapoint.  In series.  Take small steps
+  Each step might get closer or further
+  Generally 1-10 times thru data gets you close to global optima/minima
+  Each step requires 1 calculation
+
+Batch Gradient Descent
+  Calculate Gradient Descent for entire training set.  In series but BIG steps
+  Each step should get closer to global optima/minima (if alpha is set sufficiently small)
+  For a dataset of 300M, computationally expensive.  Each step requires 300M calcs

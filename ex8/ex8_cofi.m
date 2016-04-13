@@ -19,7 +19,7 @@
 %  You will start by loading the movie ratings dataset to understand the
 %  structure of the data.
 %
-fprintf('Loading movie ratings dataset.\n\n');
+% fprintf('Loading movie ratings dataset.\n\n');
 
 %  Load data
 load ('ex8_movies.mat');
@@ -62,11 +62,11 @@ R = R(1:num_movies, 1:num_users);
 J = cofiCostFunc([X(:) ; Theta(:)], Y, R, num_users, num_movies, ...
                num_features, 0);
 
-fprintf(['Cost at loaded parameters: %f '...
-         '\n(this value should be about 22.22)\n'], J);
-
-fprintf('\nProgram paused. Press enter to continue.\n');
-pause;
+% fprintf(['Cost at loaded parameters: %f '...
+%          '\n(this value should be about 22.22)\n'], J);
+%
+% fprintf('\nProgram paused. Press enter to continue.\n');
+% pause;
 
 
 %% ============== Part 3: Collaborative Filtering Gradient ==============
@@ -74,13 +74,13 @@ pause;
 %  the collaborative filtering gradient function. Specifically, you should
 %  complete the code in cofiCostFunc.m to return the grad argument.
 %
-fprintf('\nChecking Gradients (without regularization) ... \n');
-
-%  Check gradients by running checkNNGradients
-checkCostFunction;
-
-fprintf('\nProgram paused. Press enter to continue.\n');
-pause;
+% fprintf('\nChecking Gradients (without regularization) ... \n');
+%
+% %  Check gradients by running checkNNGradients
+% checkCostFunction;
+%
+% fprintf('\nProgram paused. Press enter to continue.\n');
+% pause;
 
 
 %% ========= Part 4: Collaborative Filtering Cost Regularization ========
@@ -90,14 +90,14 @@ pause;
 %
 
 %  Evaluate cost function
-J = cofiCostFunc([X(:) ; Theta(:)], Y, R, num_users, num_movies, ...
-               num_features, 1.5);
-
-fprintf(['Cost at loaded parameters (lambda = 1.5): %f '...
-         '\n(this value should be about 31.34)\n'], J);
-
-fprintf('\nProgram paused. Press enter to continue.\n');
-pause;
+% J = cofiCostFunc([X(:) ; Theta(:)], Y, R, num_users, num_movies, ...
+%                num_features, 1.5);
+%
+% fprintf(['Cost at loaded parameters (lambda = 1.5): %f '...
+%          '\n(this value should be about 31.34)\n'], J);
+%
+% fprintf('\nProgram paused. Press enter to continue.\n');
+% pause;
 
 
 %% ======= Part 5: Collaborative Filtering Gradient Regularization ======
@@ -106,13 +106,13 @@ pause;
 %
 
 %
-fprintf('\nChecking Gradients (with regularization) ... \n');
-
-%  Check gradients by running checkNNGradients
-checkCostFunction(1.5);
-
-fprintf('\nProgram paused. Press enter to continue.\n');
-pause;
+% fprintf('\nChecking Gradients (with regularization) ... \n');
+%
+% %  Check gradients by running checkNNGradients
+% checkCostFunction(1.5);
+%
+% fprintf('\nProgram paused. Press enter to continue.\n');
+% pause;
 
 
 %% ============== Part 6: Entering ratings for a new user ===============
@@ -135,26 +135,44 @@ my_ratings(98) = 2;
 
 % We have selected a few movies we liked / did not like and the ratings we
 % gave are as follows:
-my_ratings(7) = 3;
-my_ratings(12)= 5;
-my_ratings(54) = 4;
-my_ratings(64)= 5;
-my_ratings(66)= 3;
-my_ratings(69) = 5;
-my_ratings(183) = 4;
-my_ratings(226) = 5;
-my_ratings(355)= 5;
+my_ratings(1) = 5;
+my_ratings(8) = 3;
+my_ratings(11)= 4;
+my_ratings(15) = 5;
+my_ratings(28)= 4;
+my_ratings(35)= 2;
+my_ratings(48) = 4;
+my_ratings(71) = 5;
+my_ratings(77) = 4;
+my_ratings(82)= 4;
+my_ratings(98) = 4;
+my_ratings(99)= 4;
+my_ratings(117)= 3;
+my_ratings(114)= 2;
+my_ratings(121)= 4;
+my_ratings(122)= 4;
+my_ratings(127)= 5;
+my_ratings(131)= 4;
+my_ratings(139)= 4;
+my_ratings(154)= 2;
+my_ratings(161)= 4;
+my_ratings(168)= 2;
+my_ratings(174)= 5;
+my_ratings(186)= 2;
+my_ratings(201)= 0;
+my_ratings(219)= 1;
+my_ratings(234)= 1;
 
-fprintf('\n\nNew user ratings:\n');
-for i = 1:length(my_ratings)
-    if my_ratings(i) > 0
-        fprintf('Rated %d for %s\n', my_ratings(i), ...
-                 movieList{i});
-    end
-end
+% fprintf('\n\nNew user ratings:\n');
+% for i = 1:length(my_ratings)
+%     if my_ratings(i) > 0
+%         fprintf('Rated %d for %s\n', my_ratings(i), ...
+%                  movieList{i});
+%     end
+% end
 
-fprintf('\nProgram paused. Press enter to continue.\n');
-pause;
+% fprintf('\nProgram paused. Press enter to continue.\n');
+% pause;
 
 
 %% ================== Part 7: Learning Movie Ratings ====================
@@ -192,7 +210,7 @@ Theta = randn(num_users, num_features);
 initial_parameters = [X(:); Theta(:)];
 
 % Set options for fmincg
-options = optimset('GradObj', 'on', 'MaxIter', 100);
+options = optimset('GradObj', 'on', 'MaxIter', 500);
 
 % Set Regularization
 lambda = 10;
@@ -205,10 +223,10 @@ X = reshape(theta(1:num_movies*num_features), num_movies, num_features);
 Theta = reshape(theta(num_movies*num_features+1:end), ...
                 num_users, num_features);
 
-fprintf('Recommender system learning completed.\n');
-
-fprintf('\nProgram paused. Press enter to continue.\n');
-pause;
+% fprintf('Recommender system learning completed.\n');
+%
+% fprintf('\nProgram paused. Press enter to continue.\n');
+% pause;
 
 %% ================== Part 8: Recommendation for you ====================
 %  After training the model, you can now make recommendations by computing
