@@ -8,3 +8,8 @@ Batch Gradient Descent
   Calculate Gradient Descent for entire training set.  In series but BIG steps
   Each step should get closer to global optima/minima (if alpha is set sufficiently small)
   For a dataset of 300M, computationally expensive.  Each step requires 300M calcs
+
+Map Reduce
+  Divide 400M dataset into 4 batches of 100M.  Have each 100M dataset analyzed by 1 computer
+  4 computers.  Each analyze 100M sub-training set.
+  Simply add up the gradients & divide by 400M to find new Thetas
