@@ -128,40 +128,194 @@ my_ratings = zeros(1682, 1);
 
 % Check the file movie_idx.txt for id of each movie in our dataset
 % For example, Toy Story (1995) has ID 1, so to rate it "4", you can set
-my_ratings(1) = 4;
+% my_ratings(1) = 4;
 
 % Or suppose did not enjoy Silence of the Lambs (1991), you can set
-my_ratings(98) = 2;
+% my_ratings(98) = 2;
 
 % We have selected a few movies we liked / did not like and the ratings we
 % gave are as follows:
+
+% % David's Film Ratings
 my_ratings(1) = 5;
-my_ratings(8) = 3;
-my_ratings(11)= 4;
-my_ratings(15) = 5;
-my_ratings(28)= 4;
-my_ratings(35)= 2;
-my_ratings(48) = 4;
-my_ratings(71) = 5;
-my_ratings(77) = 4;
-my_ratings(82)= 4;
-my_ratings(98) = 4;
-my_ratings(99)= 4;
-my_ratings(117)= 3;
-my_ratings(114)= 2;
-my_ratings(121)= 4;
-my_ratings(122)= 4;
-my_ratings(127)= 5;
-my_ratings(131)= 4;
-my_ratings(139)= 4;
-my_ratings(154)= 2;
-my_ratings(161)= 4;
-my_ratings(168)= 2;
-my_ratings(174)= 5;
-my_ratings(186)= 2;
-my_ratings(201)= 0;
-my_ratings(219)= 1;
-my_ratings(234)= 1;
+my_ratings(2) = 3;
+my_ratings(3) = 4;
+my_ratings(4) = 4;
+my_ratings(7) = 5;
+my_ratings(8) = 5;
+my_ratings(11) = 5;
+my_ratings(12) = 5;
+my_ratings(13) = 3;
+my_ratings(14) = 4;
+my_ratings(15) = 3;
+my_ratings(17) = 3;
+my_ratings(22) = 4;
+my_ratings(23) = 5;
+my_ratings(25) = 5;
+my_ratings(27) = 2;
+my_ratings(28) = 4;
+my_ratings(29) = 2;
+my_ratings(31) = 3;
+my_ratings(33) = 4;
+my_ratings(35) = 2;
+my_ratings(38) = 2;
+my_ratings(39) = 5;
+my_ratings(41) = 3;
+my_ratings(42) = 5;
+my_ratings(47) = 4;
+my_ratings(49) = 4;
+my_ratings(50) = 5;
+my_ratings(53) = 2;
+my_ratings(54) = 3;
+my_ratings(55) = 5;
+my_ratings(56) = 5;
+my_ratings(58) = 5;
+my_ratings(59) = 5;
+my_ratings(60) = 5;
+my_ratings(61) = 5;
+my_ratings(62) = 4;
+my_ratings(63) = 3;
+my_ratings(64) = 5;
+my_ratings(66) = 4;
+my_ratings(67) = 3;
+my_ratings(69) = 4;
+my_ratings(70) = 5;
+my_ratings(71) = 4;
+my_ratings(72) = 3;
+my_ratings(73) = 3;
+my_ratings(76) = 4;
+my_ratings(77) = 3;
+my_ratings(78) = 3;
+my_ratings(79) = 4;
+my_ratings(80) = 2;
+my_ratings(81) = 5;
+my_ratings(82) = 5;
+my_ratings(83) = 5;
+my_ratings(86) = 5;
+my_ratings(87) = 4;
+my_ratings(88) = 4;
+my_ratings(89) = 5;
+my_ratings(90) = 3;
+my_ratings(92) = 4;
+my_ratings(94) = 3;
+my_ratings(95) = 4;
+my_ratings(96) = 3;
+my_ratings(97) = 5;
+my_ratings(98) = 5;
+my_ratings(99) = 5;
+my_ratings(100) = 5;
+
+
+% % Hanna's Film Ratings
+% my_ratings(2) = 4;
+% my_ratings(22) = 2;
+% my_ratings(41) = 4;
+% my_ratings(50) = 5;
+% my_ratings(71) = 5;
+% my_ratings(91) = 5;
+% my_ratings(82) = 5;
+% my_ratings(67) = 2;
+% my_ratings(89) = 3;
+
+% % Carrie's Film Ratings
+% my_ratings(1) = 4;
+% my_ratings(7) = 2;
+% my_ratings(11) = 3;
+% my_ratings(15) = 4;
+% my_ratings(28) = 4;
+% my_ratings(31) = 4;
+% my_ratings(35) = 1;
+% my_ratings(40) = 1;
+% my_ratings(41) = 2;
+% my_ratings(50) = 4;
+% my_ratings(54) = 3;
+% my_ratings(56) = 4;
+% my_ratings(64) = 4;
+% my_ratings(69) = 1;
+% my_ratings(82) = 4;
+% my_ratings(87) = 4;
+% my_ratings(91) = 4;
+% my_ratings(95) = 4;
+% my_ratings(98) = 5;
+% my_ratings(100) = 3;
+
+% % Mason's Film Ratings
+% my_ratings(1) = 5;
+% my_ratings(2) = 3;
+% my_ratings(12) = 5;
+% my_ratings(29) = 4;
+% my_ratings(53) = 2;
+% my_ratings(56) = 2;
+% my_ratings(79) = 4;
+% my_ratings(94) = 4;
+% my_ratings(97) = 5;
+% my_ratings(98) = 5;
+
+% % Wayne's Film Ratings
+% my_ratings(7) = 4;
+% my_ratings(81) = 4;
+% my_ratings(34) = 2;
+% my_ratings(64) = 4;
+% my_ratings(43) = 3;
+% my_ratings(1) = 4;
+% my_ratings(12) = 4;
+% my_ratings(35) = 1;
+% my_ratings(89) = 4;
+% my_ratings(73) = 3;
+
+% % Devin's Film Ratings
+% my_ratings(1) = 4;
+% my_ratings(12) = 4;
+% my_ratings(17) = 3;
+% my_ratings(22) = 5;
+% my_ratings(41) = 4;
+% my_ratings(50) = 5;
+% my_ratings(51) = 2;
+% my_ratings(64) = 5;
+% my_ratings(70) = 4;
+% my_ratings(85) = 4;
+% my_ratings(98) = 5;
+
+% % Jason's film Ratings
+% my_ratings(97) = 4;
+% my_ratings(2) = 4;
+% my_ratings(28) = 5;
+% my_ratings(51) = 5;
+% my_ratings(24) = 1;
+% my_ratings(38) = 2;
+% my_ratings(68) = 3;
+% my_ratings(77) = 4;
+% my_ratings(27) = 2;
+% my_ratings(43) = 3;
+
+% % Doug Wells Ratings
+% my_ratings(1) = 5;
+% my_ratings(8) = 3;
+% my_ratings(11)= 4;
+% my_ratings(15) = 5;
+% my_ratings(28)= 4;
+% my_ratings(35)= 2;
+% my_ratings(48) = 4;
+% my_ratings(71) = 5;
+% my_ratings(77) = 4;
+% my_ratings(82)= 4;
+% my_ratings(98) = 4;
+% my_ratings(99)= 4;
+% my_ratings(117)= 3;
+% my_ratings(114)= 2;
+% my_ratings(121)= 4;
+% my_ratings(122)= 4;
+% my_ratings(127)= 5;
+% my_ratings(131)= 4;
+% my_ratings(139)= 4;
+% my_ratings(154)= 2;
+% my_ratings(161)= 4;
+% my_ratings(168)= 2;
+% my_ratings(174)= 5;
+% my_ratings(186)= 2;
+% my_ratings(201)= 0;
+% my_ratings(219)= 1;
+% my_ratings(234)= 1;
 
 % fprintf('\n\nNew user ratings:\n');
 % for i = 1:length(my_ratings)
@@ -233,14 +387,27 @@ Theta = reshape(theta(num_movies*num_features+1:end), ...
 %  the predictions matrix.
 %
 
+
 p = X * Theta';
 my_predictions = p(:,1) + Ymean;
 
+% Share and save data on model
+size(my_ratings)
+size(X)
+size(Theta)
+size(my_predictions)
+save moviesThetas.txt Theta -ascii;
+save moviesX.txt X -ascii;
+save my_predictions.txt my_predictions -ascii;
+
+% Load Movie List
 movieList = loadMovieList();
 
 [r, ix] = sort(my_predictions, 'descend');
+
+% Printing out top 20 films recommended (DW subtracted 3 so on a 5 star scale)
 fprintf('\nTop recommendations for you:\n');
-for i=1:10
+for i=1:50
     j = ix(i);
     fprintf('Predicting rating %.1f for movie %s\n', my_predictions(j), ...
             movieList{j});
@@ -253,3 +420,15 @@ for i = 1:length(my_ratings)
                  movieList{i});
     end
 end
+
+my_predictions(1,:)
+movieList{1,:}
+
+% Save movie recommendations
+movieRatings = {};
+for i=1:1500
+    j = ix(i);
+    movieRatings{i,1} = my_predictions(j,1);
+    movieRatings{i,2} = movieList(j,:);
+end
+save movieRatingsForCarrie.txt movieRatings -ascii;
